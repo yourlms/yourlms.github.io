@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ function Signup() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
@@ -23,7 +23,7 @@ function Signup() {
 
       navigate("/login");
     } catch (err) {
-      setError("Something went wrong");
+      setError(`Something went wrong ${err}`);
     }
   };
 

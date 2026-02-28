@@ -1,18 +1,16 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Home from "./pages/Home";
-import Users from "./pages/Users";
 import CreateUser from "./pages/CreateUser";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AboutUs from "./pages/AboutUs";
 import CourseDashboard from "./pages/CourseDashboard";
 
-
 function App() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
 
   useEffect(() => {
     fetchUsers();
@@ -35,27 +33,23 @@ function App() {
             <Link className="nav-link text-white" to="/">
               Home
             </Link>
-            <Link className="nav-link text-white" to="/aboutus">
+            <Link className="nav-link text-white" to="/about">
               Our Mission
             </Link>
-            {/* <Link className="nav-link text-white" to="/create">
+            <Link className="nav-link text-white" to="/create">
               Create
-            </Link> */}
+            </Link>
           </div>
         </div>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/dashboard" element={<CourseDashboard />} />
-        <Route path="/users" element={<Users users={users} />} />
+        <Route path="/create" element={<CreateUser users={users} setUsers={setUsers} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp/>} />
-        <Route
-          path="/create"
-          element={<CreateUser users={users} setUsers={setUsers} />}
-        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/dashboard" element={<CourseDashboard />} />
       </Routes>
     </Router>
   );

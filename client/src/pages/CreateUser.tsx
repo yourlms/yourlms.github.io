@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useState, type FC, type FormEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function CreateUser({ users, setUsers }) {
+interface User {
+  name: string;
+  email: string;
+}
+
+interface CreateUserProps {
+  users: User[];
+  setUsers: (users: User[]) => void;
+}
+
+const CreateUser: FC<CreateUserProps> = ({ users, setUsers }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const res = await axios.post("http://localhost:4000/api/users", {

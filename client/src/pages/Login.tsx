@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -8,15 +8,15 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
     try {
-      const res = await axios.post(
-        "http://localhost:4000/api/auth/login",
-        { email, password }
-      );
+      const res = await axios.post("http://localhost:4000/api/auth/login", {
+        email,
+        password,
+      });
 
       console.log("Logged in:", res.data);
 
@@ -25,7 +25,7 @@ function Login() {
 
       navigate("/dashboard");
     } catch (err) {
-      setError("Invalid credentials");
+      setError(`Invalid credentials: ${err}`);
     }
   };
 
@@ -34,15 +34,9 @@ function Login() {
       <div className="col-md-6 col-lg-4">
         <div className="card shadow-lg border-0 rounded-4">
           <div className="card-body p-5">
-            <h2 className="text-center fw-bold mb-4 text-primary">
-              Login
-            </h2>
+            <h2 className="text-center fw-bold mb-4 text-primary">Login</h2>
 
-            {error && (
-              <div className="alert alert-danger">
-                {error}
-              </div>
-            )}
+            {error && <div className="alert alert-danger">{error}</div>}
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -77,8 +71,7 @@ function Login() {
 
             <div className="text-center mt-4">
               <small>
-                Don’t have an account?{" "}
-                <Link to="/signup">Sign Up</Link>
+                Don’t have an account? <Link to="/signup">Sign Up</Link>
               </small>
             </div>
           </div>
